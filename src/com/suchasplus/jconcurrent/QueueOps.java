@@ -38,7 +38,7 @@ public class QueueOps implements  Runnable{
                 e.printStackTrace();
             }
 
-            if (atomicInteger.addAndGet(1) > 100) {
+            if (atomicInteger.addAndGet(1) > 10) {
                 return;
             }
         }
