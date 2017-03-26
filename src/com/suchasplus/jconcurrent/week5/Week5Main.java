@@ -33,19 +33,28 @@ public class Week5Main {
         System.out.println((cow1.hashCode() == cow1.hashCode()) + "\r\n" + System.identityHashCode(cow1) + "\r\n" + System.identityHashCode(cow2));
         // override hashcode equal, object addr not equal
 
-        System.exit(0);
+        //System.exit(0);
 
-        BlockingQueue<Integer> bq = new LinkedBlockingQueue<>(linkedList);
+        final BlockingQueue<Integer> bq = new LinkedBlockingQueue<>(linkedList);
         ConcurrentLinkedQueue<Integer> clq = new ConcurrentLinkedQueue<>(linkedList);
         Instant bq_start = Instant.now();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(THR_COUNT);
+        IntStream.range(0,10).forEach((i)->{
+            executorService.submit( new BQRun(bq));
+        });
+
         Thread[] threads = new Thread[THR_COUNT];
-        for (int i = 0; i < THR_COUNT; i++) {
-            threads[i] = new Thread(new BQRun(bq));
-            threads[i].start();
-        }
-        for (int i = 0; i < THR_COUNT; i++) {
-            threads[i].join();
-        }
+//        for (int i = 0; i < THR_COUNT; i++) {
+//            threads[i] = new Thread(new BQRun(bq));
+//            threads[i].start();
+//        }
+//        for (int i = 0; i < THR_COUNT; i++) {
+//            threads[i].join();
+//        }
+        executorService.shutdown();
+        while(!executorService.isTerminated()){}
+
         Duration bqDuration = Duration.between(bq_start, Instant.now());
         Instant clq_start = Instant.now();
         threads = new Thread[THR_COUNT];
@@ -60,12 +69,12 @@ public class Week5Main {
 
         System.out.println("without SIZE COUNT: BQ: " + bqDuration.toString() + " , CLQ: " + clqDuration.toString());
 
-        bq = new LinkedBlockingQueue<>(linkedList);
+        LinkedBlockingQueue<Integer> bq1 = new LinkedBlockingQueue<>(linkedList);
         clq = new ConcurrentLinkedQueue<>(linkedList);
         bq_start = Instant.now();
         threads = new Thread[THR_COUNT];
         for (int i = 0; i < THR_COUNT; i++) {
-            threads[i] = new Thread(new BQCountRun(bq));
+            threads[i] = new Thread(new BQCountRun(bq1));
             threads[i].start();
         }
         for (int i = 0; i < THR_COUNT; i++) {
