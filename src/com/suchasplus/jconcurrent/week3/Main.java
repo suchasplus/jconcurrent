@@ -1,4 +1,4 @@
-package com.suchasplus.jconcurrent;
+package com.suchasplus.jconcurrent.week3;
 
 /**
  * Powered by suchasplus@gmail.com on 2017/3/6.
