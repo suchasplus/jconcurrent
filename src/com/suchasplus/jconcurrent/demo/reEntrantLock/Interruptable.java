@@ -77,7 +77,7 @@ public class Interruptable implements Runnable{
 
 /*
 2017-03-26 23:17:07
-Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.60-b23 mixed mode):
+Full thread dump Java HotSpot(TM) 64-Bit AIOServer VM (25.60-b23 mixed mode):
 
 "DestroyJavaVM" #14 prio=5 os_prio=0 tid=0x000000000234d800 nid=0x3c14 waiting on condition [0x0000000000000000]
    java.lang.Thread.State: RUNNABLE
